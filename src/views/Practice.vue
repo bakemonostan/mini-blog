@@ -1,7 +1,7 @@
 <template>
-  <h1>Practice Page</h1>
+  <h1>PRACTICE PAGE</h1><br /><br />
   <h3>{{ greet }} {{ name }}, </h3>
-  <p ref="p">Good to have you here</p>
+  <p>Good to have you here</p>
   <button @click="handleClick">Le click</button><br />
   <hr /><br />
   <!-- USING REF TO MAKE VALUES REACTIVE-->
@@ -19,28 +19,64 @@
     >
     <button @click="handleReactive">Change Class</button>
   </div>
+
+  <br /><br /><br />
+  <!-- WORKING WITH COMPUTED VALUES/PROPERTIES -->
+  <hr />
+  <div class="test2">
+    <h3>Computed Properties</h3>
+    <input type="text" v-model="search" />
+    <p>{{ search }}</p>
+    <div v-for="names in filteredNames" :key="names">
+      <p>{{ names }}</p>
+    </div>
+  </div>
 </template>
 
 <script>
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref, watch, watchEffect } from 'vue';
 
 export default {
   name: 'Home',
   setup() {
-    const p = ref();
     const greet = ref('Welcome to the home page');
     const name = ref('Ehis');
+    const search = ref('');
 
+    const stopWatch = watch(search, () => {
+      console.log('Running');
+    });
+
+    // good for fetching data
+    const stopWatchEffect = watchEffect(() => {
+      console.log('watch effect ran', search.value);
+    });
+
+    const handleStop = () => {
+      stopWatch();
+      stopWatchEffect();
+    };
+
+    // using refs
     const refTest = ref({
       name: 'BakemonoStan',
       class: 'Monster',
     });
 
+    // using reactive
     const reactiveTest = reactive({ name: 'Stanley', class: 'Beta' });
+
+    // using Computed properties
+    const namesArr = ref(['ehis', 'itua', 'omo', 'ediale']);
+
+    const filteredNames = computed(() => {
+      return namesArr.value.filter((nameVal) => {
+        return nameVal.includes(search.value);
+      });
+    });
 
     const handleClick = () => {
       name.value = 'Stanley';
-      console.log(name);
       //   p.value.classList.toggle('test');
     };
 
@@ -56,18 +92,28 @@ export default {
       name,
       greet,
       handleClick,
-      p,
       refTest,
       reactiveTest,
       handleRefTest,
       handleReactive,
+      namesArr,
+      search,
+      filteredNames,
+      handleStop,
     };
   },
+  // mounted() {
+  //   console.log('Mounted');
+  // },
 };
 </script>
 
 <style>
 .test {
   text-decoration: line-through;
+}
+
+.test2 {
+  padding: 1rem 0;
 }
 </style>
