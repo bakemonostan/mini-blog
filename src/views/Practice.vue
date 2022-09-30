@@ -1,5 +1,6 @@
 <template>
-  <h1>{{ greet }} {{ name }}, </h1>
+  <h1>Practice Page</h1>
+  <h3>{{ greet }} {{ name }}, </h3>
   <p ref="p">Good to have you here</p>
   <button @click="handleClick">Le click</button><br />
   <hr /><br />
@@ -13,16 +14,6 @@
   <!-- USing REACTIVE TO MAKE VALUES REACTIVE -->
   <div>
     <h3>Using Reactive</h3>
-    <p
-      >{{ reactiveTest.name }} is currently of {{ reactiveTest.class }} class</p
-    >
-    <button @click="handleReactive">Change Class</button>
-  </div>
-
-  <br /><br /><br />
-  <!-- WORKING WITH COMPUTED VALUES/PROPERTIES -->
-  <div>
-    <h3>Computed Properties</h3>
     <p
       >{{ reactiveTest.name }} is currently of {{ reactiveTest.class }} class</p
     >
