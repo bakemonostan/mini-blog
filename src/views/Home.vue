@@ -1,29 +1,27 @@
 <template>
   <h1>Welcome</h1>
-  <PostList :posts="posts" />
+  <h3 v-if="error">{{ error }}</h3>
+  <div v-if="posts.length">
+    <PostList :posts="posts" />
+  </div>
+  <div v-else>loading...</div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import getPosts from '../composables/getPosts';
 import PostList from '../components/PostList.vue';
 
 export default {
   components: { PostList },
   name: ' Home',
+  components: { PostList },
   setup() {
-    const posts = ref([]);
-    const error = ref(null);
+    const { posts, error, load } = getPosts();
 
-    const load = async () => {
-      try {
-        let data = await fetch('https://jsonplaceholder.typicode.com/users');
-        console.log(data);
-      } catch (error) {}
-    };
+    load();
 
     return { posts, error };
   },
-  components: { PostList },
 };
 </script>
 
